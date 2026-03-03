@@ -1,0 +1,71 @@
+{
+  "projectType": "saas",
+  "projectName": "ChaosPrep",
+  "projectDescription": "A distraction-free productivity tracker for JEE, NEET, and competitive exam aspirants to master their daily study chaos.",
+  "theme": "palm",
+  "primaryColor": "#7c3aed",
+  "lightColor": "#a78bfa",
+  "darkColor": "#5b21b6",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": [
+          "introduction",
+          "quickstart",
+          "account-setup"
+        ]
+      },
+      {
+        "group": "Core Features",
+        "pages": [
+          "features/daily-planner",
+          "features/weekly-targets",
+          "features/focus-timer",
+          "features/mock-tests",
+          "features/error-tracking",
+          "features/syllabus-tracker",
+          "features/accountability-squad"
+        ]
+      },
+      {
+        "group": "Guides",
+        "pages": [
+          "guides/study-strategies",
+          "guides/data-management",
+          "guides/customization"
+        ]
+      },
+      {
+        "group": "Reference",
+        "pages": [
+          "reference/settings",
+          "reference/faq",
+          "reference/troubleshooting"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Daily and weekly task planning with visual calendar",
+    "Focus timer with study streak tracking",
+    "Mock test analytics and performance trajectories",
+    "Error logging and categorization system",
+    "Syllabus progress tracking for JEE/NEET",
+    "Accountability squad with friend invite codes",
+    "Daily question counters and study metrics",
+    "PWA with offline support and Firebase sync"
+  ],
+  "publicApiSurface": [
+    "Daily Task Management",
+    "Weekly Target Setting",
+    "Focus Timer (Start/Stop/Log)",
+    "Mock Test Recording",
+    "Error Log Categories (Concept/Silly/Calculation/Time)",
+    "Syllabus Status Tracking",
+    "Squad Member Management",
+    "Study Analytics & Charts",
+    "Settings (Exam Type, Target Date, Custom Subjects)",
+    "Data Export/Import"
+  ]
+}
