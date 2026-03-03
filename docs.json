@@ -37,8 +37,10 @@
           "features/focus-timer",
           "features/mock-tests",
           "features/error-tracking",
+          "features/daily-questions",
           "features/syllabus-tracker",
-          "features/accountability-squad"
+          "features/accountability-squad",
+          "features/focus-radio"
         ]
       },
       {

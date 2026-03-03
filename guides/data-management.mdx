@@ -343,3 +343,96 @@ For typical usage (one student, daily study tracking), you'll never hit these li
 <Tip>
   To minimize reads and writes, ChaosPrep uses Firestore's local cache aggressively. Switching between views doesn't trigger new database queries - it uses cached data.
 </Tip>
+
+## Data backup and export
+
+ChaosPrep provides built-in export and import functionality for creating local backups of your data.
+
+### Exporting your data
+
+To create a JSON backup of all your study data:
+
+1. Open **Settings** (gear icon)
+2. Scroll to the **Data Management** section
+3. Click **Export Data**
+4. A JSON file downloads to your device with all your data
+
+The export includes:
+- All tasks (past and future)
+- Weekly targets
+- Study timer logs
+- Mock test records
+- Error logs
+- Question logs
+- Syllabus progress
+- All settings and preferences
+
+The file is named with a timestamp (e.g., `chaosprep-backup-2026-03-03.json`) for easy organization.
+
+<Info>
+**Export format**: The JSON file mirrors your Firestore data structure exactly. It's human-readable and can be viewed in any text editor.
+</Info>
+
+### Importing data
+
+To restore from a backup or transfer data between accounts:
+
+1. Open **Settings**
+2. Find the **Data Management** section
+3. Click **Import Data**
+4. Select your backup JSON file
+5. Confirm the import (this will **overwrite** existing data)
+
+<Warning>
+**Import overwrites**: Importing a backup replaces all current tasks, logs, and settings with the backup's contents. Export your current data first if you want to preserve it.
+</Warning>
+
+### Export to calendar (.ics)
+
+You can export your tasks as a calendar file to import into Google Calendar, Apple Calendar, or other calendar apps:
+
+1. Go to the **Daily Planner** view
+2. Click the **Export** button (or find it in Settings)
+3. Select **Export to Calendar**
+4. An `.ics` file downloads with all your scheduled tasks
+
+The calendar export includes:
+- Task titles and descriptions
+- Scheduled dates
+- Subject information
+- All future tasks (past tasks are excluded)
+
+Import the `.ics` file into your calendar app to see your study schedule alongside other commitments.
+
+<Tip>
+**Use case**: Export your study plan to your phone's native calendar to get system notifications and reminders outside of ChaosPrep.
+</Tip>
+
+### Backup best practices
+
+<CardGroup cols={2}>
+  <Card title="Regular backups" icon="clock">
+    Export your data weekly or before major changes (exam type switches, bulk deletions).
+  </Card>
+  <Card title="Cloud storage" icon="cloud">
+    Store backup JSON files in Google Drive or Dropbox for redundancy beyond Firestore.
+  </Card>
+  <Card title="Pre-import backup" icon="shield">
+    Always export current data before importing a backup, in case you need to revert.
+  </Card>
+  <Card title="Version control" icon="code-branch">
+    Keep dated backups (don't overwrite the same file) to preserve snapshots of your progress.
+  </Card>
+</CardGroup>
+
+### When to use export/import
+
+**Common scenarios:**
+
+- **Switching Google accounts**: Export from old account → Sign in with new account → Import
+- **Device reset**: Export before factory reset → Import after setup
+- **Data migration**: Moving from old device to new device
+- **Disaster recovery**: Restore if Firestore data is accidentally deleted
+- **Archival**: Save historical data for long-term records
+
+The export/import system ensures your study data is never locked into a single account or device.

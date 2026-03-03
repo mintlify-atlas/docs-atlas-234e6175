@@ -1,0 +1,184 @@
+---
+title: Focus radio
+description: Built-in music player for study sessions with curated YouTube stations
+---
+
+Focus Radio is a built-in music player widget that streams curated study music directly within ChaosPrep. It uses YouTube's embedded player to provide distraction-free background music without leaving the app.
+
+## What is Focus Radio?
+
+Focus Radio provides access to popular study music stations like Lofi Girl, ambient soundscapes, and concentration-enhancing playlists. The widget:
+
+- Floats in the bottom-right corner of the screen
+- Plays audio in the background while you study
+- Requires no separate tabs or external players
+- Works across all views (Planner, Timer, Stats, etc.)
+
+<Info>
+Focus Radio is optional. You can enable or disable it in [Settings](/reference/settings) under **Focus Radio**.
+</Info>
+
+## How to use Focus Radio
+
+<Steps>
+  <Step title="Enable Focus Radio">
+    First, ensure Focus Radio is enabled:
+    1. Open **Settings** (gear icon)
+    2. Find **Focus Radio** under Preferences
+    3. Toggle it **ON** (knob moves to the right)
+
+    The music widget button appears in the bottom-right corner (music note icon).
+  </Step>
+
+  <Step title="Open the player">
+    Click the **floating music button** (circular button with music note icon) to expand the player card.
+
+    The player shows:
+    - Current station name (e.g., "Lofi Girl")
+    - Playback status ("Playing" or "Paused")
+    - Visual equalizer bars (animated when playing)
+    - Playback controls (previous, play/pause, next)
+  </Step>
+
+  <Step title="Select a station">
+    Browse available stations using the **previous** and **next** buttons (skip-back and skip-forward icons).
+
+    Each station change loads a different YouTube stream optimized for studying.
+  </Step>
+
+  <Step title="Control playback">
+    - **Play**: Click the center play button to start audio
+    - **Pause**: Click again to pause
+    - **Change stations**: Use left/right arrows to switch streams
+
+    The player status updates in real-time, and the button icon animates when music is playing.
+  </Step>
+</Steps>
+
+## Player interface
+
+The Focus Radio player card displays:
+
+| Element | Description |
+|---------|-------------|
+| **Visualizer bars** | Animated bars indicating playback (bouncing when playing) |
+| **Station name** | Current station title (e.g., "Lofi Girl", "Deep Focus") |
+| **Status indicator** | Red dot showing YouTube player connection status |
+| **Playback status** | "Playing", "Paused", or "Loading" |
+| **Skip controls** | Previous/Next buttons to change stations |
+| **Play/Pause button** | Large center button for playback control |
+
+When music is playing, the floating button shows:
+- **Spinning ring** around the icon (animated border)
+- **Pulsing glow** effect
+- **Color change** indicating active state
+
+## Hiding the widget
+
+You can minimize or completely disable Focus Radio:
+
+**To minimize:**
+- Click anywhere outside the player card to collapse it
+- The floating button remains visible for quick access
+
+**To disable completely:**
+1. Go to **Settings**
+2. Toggle **Focus Radio** OFF
+3. The widget disappears from all views
+
+You can re-enable it anytime from Settings.
+
+<Tip>
+If you prefer complete silence or your own music app, simply disable Focus Radio. ChaosPrep tracks your study time regardless of whether the widget is enabled.
+</Tip>
+
+## Available stations
+
+Focus Radio curates YouTube streams optimized for studying:
+
+- **Lofi Girl**: Classic lofi hip-hop beats (24/7 stream)
+- **Ambient soundscapes**: Nature sounds, rain, white noise
+- **Deep Focus**: Instrumental concentration music
+- **Study Jazz**: Calm jazz for background ambiance
+
+Stations are pre-selected for non-intrusive, focus-enhancing audio without lyrics or sudden volume changes.
+
+<Note>
+Station availability depends on YouTube. If a stream is offline, try switching to another station using the next/previous buttons.
+</Note>
+
+## Integration with Timer
+
+Focus Radio works independently of the [Focus Timer](/features/focus-timer):
+
+- **Music plays continuously** even when timer is paused or stopped
+- **Music doesn't affect timer logs** (audio playback is not tracked)
+- **You can study with music or in silence** without impacting tracked time
+
+Use them together:
+1. Start the Focus Timer for your subject
+2. Open Focus Radio and play a station
+3. Study with background music while tracking time
+
+Both features run simultaneously without interfering.
+
+## Technical details
+
+Focus Radio uses YouTube's embedded iframe player API:
+
+- **No ads** during playback (embedded player behavior)
+- **Background playback** continues when ChaosPrep is minimized (on desktop)
+- **Auto-reconnect** if connection drops
+- **Minimal bandwidth** usage (audio-only streams when available)
+
+The player is fully integrated into ChaosPrep, so you don't need to manage separate tabs or windows.
+
+<Warning>
+Focus Radio requires an internet connection. If you're studying offline, the widget won't function. Use downloaded music or study in silence instead.
+</Warning>
+
+## Troubleshooting
+
+<Accordion title="Music won't play">
+**Possible causes:**
+- YouTube stream is offline → Try switching stations
+- Browser blocked autoplay → Click play manually after opening the player
+- Internet connection issue → Check your network
+
+**Solution:** Refresh the page and try a different station.
+</Accordion>
+
+<Accordion title="Audio stops unexpectedly">
+This can happen if:
+- The YouTube stream ended or restarted
+- Your internet connection dropped
+- Browser throttled background tabs
+
+**Solution:** Click play again to resume. The player will reconnect.
+</Accordion>
+
+<Accordion title="Can't find the music button">
+The button only appears if Focus Radio is enabled in Settings.
+
+**Solution:**
+1. Open Settings
+2. Enable **Focus Radio** toggle
+3. Refresh the page if needed
+</Accordion>
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Keep volume moderate" icon="volume">
+    Set volume just loud enough to mask distractions, not so loud it diverts attention from studying.
+  </Card>
+  <Card title="Try different stations" icon="shuffle">
+    Experiment with stations to find what helps your concentration. Lofi works for some; ambient sounds work for others.
+  </Card>
+  <Card title="Use sparingly for deep work" icon="brain">
+    For intense problem-solving, silence may work better than music. Save music for review or routine practice.
+  </Card>
+  <Card title="Combine with timer" icon="timer">
+    Start both the timer and music for complete study session tracking with background audio.
+  </Card>
+</CardGroup>
