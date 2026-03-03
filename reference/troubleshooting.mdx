@@ -1,0 +1,305 @@
+---
+title: Troubleshooting
+description: Solutions for common issues with ChaosPrep
+---
+
+<AccordionGroup>
+  <Accordion title="Data not syncing">
+    If your changes aren't syncing across devices or tabs, try these steps:
+
+    **Check your internet connection:**
+    - ChaosPrep requires an active internet connection to sync data to the cloud
+    - Offline changes are stored locally and will sync automatically when you reconnect
+
+    **Verify you're signed in:**
+    1. Check the sidebar - your profile should be visible at the bottom
+    2. If you see a "Sign In" screen, you've been signed out
+    3. Sign in again with the same Google account
+
+    **Clear the cache and reload:**
+    1. Open browser DevTools (F12 or Cmd+Option+I)
+    2. Right-click the refresh button and select "Empty Cache and Hard Reload"
+    3. Alternatively, clear your browser's site data for ChaosPrep
+
+    **Force a sync:**
+    1. Make a small change (add a task, update a setting)
+    2. Wait 5-10 seconds for Firestore to sync
+    3. Check if the change appears on another device
+
+    <Warning>
+    If you're using multiple Google accounts, make sure you're signed in with the correct one. Each account has separate data.
+    </Warning>
+
+    **Still not working?**
+    - Check the browser console (F12) for Firebase errors
+    - Ensure your browser is up to date
+    - Try signing out and signing back in
+  </Accordion>
+
+  <Accordion title="Sign-in problems">
+    **"Popup blocked" error:**
+    - ChaosPrep uses Google Sign-In via popup window
+    - Check if your browser blocked the popup (look for an icon in the address bar)
+    - Allow popups for ChaosPrep and try again
+
+    **Google Sign-In fails silently:**
+    1. Clear your browser cookies and cache
+    2. Disable any privacy extensions temporarily (Privacy Badger, uBlock, etc.)
+    3. Try signing in from an incognito/private window
+    4. Make sure third-party cookies are enabled for `sval.tech` and `firebase.google.com`
+
+    **"Auth domain error":**
+    - This happens if you're accessing ChaosPrep from an unauthorized domain
+    - Use the official URL: `https://chaosprep.sval.tech`
+    - If you're self-hosting, ensure your domain is added to Firebase Auth settings
+
+    **Account not recognized:**
+    - ChaosPrep creates a new account the first time you sign in
+    - If your data is missing, you might have signed in with a different Google account
+    - Check your Google account email in the sidebar to confirm
+
+    <Info>
+    ChaosPrep only supports Google Sign-In. Email/password authentication is not available.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Offline mode not working">
+    ChaosPrep uses persistent local cache for offline functionality. If offline mode isn't working:
+
+    **Enable cache in your browser:**
+    - ChaosPrep requires IndexedDB support
+    - Some browsers disable IndexedDB in private/incognito mode
+    - Check if "Block all cookies" is enabled (this breaks offline mode)
+
+    **Clear and rebuild the cache:**
+    1. Sign in while online
+    2. Navigate through all main views (Calendar, Timer, Syllabus, etc.)
+    3. This forces Firestore to cache your data locally
+    4. Go offline and test again
+
+    **Browser compatibility:**
+    - Chrome/Edge: Full support
+    - Firefox: Full support
+    - Safari: Full support (iOS 13+)
+    - Older browsers: May have limited offline capabilities
+
+    <Warning>
+    Clearing your browser data will delete the offline cache. You'll need to reconnect to the internet to re-download your data.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="Timer not tracking correctly">
+    **Timer keeps resetting:**
+    - Check if you have multiple tabs of ChaosPrep open
+    - Only use the timer in one tab at a time
+    - Closing a tab while the timer is running will stop it
+
+    **Time not incrementing:**
+    - The timer uses local time and calculates elapsed duration in milliseconds
+    - If your system clock changes, the timer may behave unexpectedly
+    - Restart the timer to fix the issue
+
+    **Background tabs not updating:**
+    - When you switch to a background tab, the timer display catches up automatically
+    - The time is still being tracked accurately even if the display is frozen
+    - This is a browser power-saving feature
+
+    **Lost timer session:**
+    - If you accidentally close the tab or browser, the unsaved session is lost
+    - Always click "Stop" to save your session before closing
+    - Timer sessions under 1 minute can be discarded (you'll be prompted)
+
+    <Info>
+    The timer continues running even if you navigate to a different view (Calendar, Syllabus, etc.) within ChaosPrep.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Squad members not appearing">
+    **Friend added but not showing:**
+    1. Check your internet connection
+    2. Refresh the Squad view (switch to another view and back)
+    3. Ask your friend to refresh their app as well
+
+    **Invite link not working:**
+    - Make sure the full URL is copied (including the `?invite=` parameter)
+    - The invite link is single-use and automatically adds both users to each other's squads
+    - If the link doesn't work, ask the sender to generate a new one
+
+    **Squad member shows as "offline" but they're studying:**
+    - Online status is based on a heartbeat system
+    - It may take up to 1 minute to update
+    - If they're using an old version of ChaosPrep, the presence feature may not work
+
+    **Tasks not visible for squad member:**
+    - Check if they have `shareTasks` enabled in their settings
+    - By default, task sharing is enabled, but users can disable it
+
+    <Warning>
+    Squad features require the `ENABLE_SQUAD_FEATURE` flag to be enabled. This is on by default in the official version.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="Calendar not loading">
+    **Infinite spinner:**
+    - This usually means a Firebase query is hanging
+    - Check your internet connection
+    - Refresh the page
+
+    **Tasks not appearing:**
+    - Verify the tasks exist by switching to the Day View (click on any date)
+    - Check if you're viewing the correct month/week
+    - Ensure tasks have valid dates in `YYYY-MM-DD` format
+
+    **Drag and drop not working:**
+    - Make sure you're dragging a task card, not clicking a button inside it
+    - Drop the task onto a date card in the calendar
+    - If it's not working, try refreshing the page
+
+    **Week starts on the wrong day:**
+    - ChaosPrep uses Monday as the start of the week (ISO 8601 standard)
+    - This cannot be changed in settings
+  </Accordion>
+
+  <Accordion title="Tasks not saving">
+    **Task disappears after adding:**
+    - Check your internet connection
+    - The task might be saved locally but not synced to Firestore
+    - Try refreshing the page to see if it reappears
+
+    **Changes not persisting:**
+    - Make sure you click "Save" or press Enter to confirm changes
+    - Some actions (like checking off a task) save automatically
+    - Others (like editing task text) require explicit confirmation
+
+    **Duplicate tasks appearing:**
+    - This can happen if you rapidly add tasks while offline
+    - Let Firestore finish syncing (wait 5-10 seconds)
+    - Manually delete the duplicates
+
+    **Task stuck in "completed" state:**
+    - Check the task's completion status in the Day View
+    - If it's marked complete, uncheck it to reopen
+    - Tasks can also have scores (MockTest feature) - check if marks are entered
+  </Accordion>
+
+  <Accordion title="PWA installation issues">
+    **"Install" prompt not appearing:**
+    - ChaosPrep must be served over HTTPS
+    - The prompt only appears if you've visited the site multiple times
+    - Some browsers (Firefox desktop) don't support PWA install prompts
+
+    **How to manually install:**
+
+    **Chrome/Edge (Desktop):**
+    1. Click the ⋮ menu (top right)
+    2. Select "Install ChaosPrep" or "Apps → Install this site as an app"
+
+    **Chrome/Edge (Mobile):**
+    1. Tap the ⋮ menu
+    2. Select "Add to Home screen"
+    3. Follow the prompts
+
+    **Safari (iOS):**
+    1. Tap the Share button (square with arrow)
+    2. Scroll down and tap "Add to Home Screen"
+    3. Tap "Add"
+
+    **Safari (macOS):**
+    - Safari does not support PWA installation on macOS
+    - Use Chrome or Edge instead
+
+    **Firefox:**
+    - Firefox supports PWAs on Android only
+    - Tap the menu (⋮) → "Install"
+
+    <Info>
+    Once installed, ChaosPrep will open in a standalone window without browser UI, just like a native app.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Browser compatibility
+
+ChaosPrep works best on modern browsers with full ES6+ support.
+
+**Fully supported:**
+- Chrome 90+ (Desktop & Mobile)
+- Edge 90+
+- Safari 14+ (iOS & macOS)
+- Firefox 88+
+
+**Partial support:**
+- Older browsers may have issues with offline mode, drag-and-drop, or animations
+
+**Not supported:**
+- Internet Explorer (any version)
+
+<Warning>
+If you're using an outdated browser, some features may not work correctly. Update to the latest version for the best experience.
+</Warning>
+
+## Firebase connection issues
+
+If you see Firebase-related errors in the browser console:
+
+**Common Firebase errors:**
+
+**`permission-denied`:**
+- You're not signed in, or your session expired
+- Sign out and sign back in
+
+**`unavailable`:**
+- Firebase is temporarily unreachable
+- Check your internet connection
+- Retry after a few seconds
+
+**`quota-exceeded`:**
+- You've hit Firestore's free tier limits (rare for individual users)
+- Wait a few hours for the quota to reset
+
+**`app-deleted`:**
+- Firebase app configuration is missing or invalid
+- This is a developer issue - contact support
+
+<Info>
+You can monitor Firebase status at [status.firebase.google.com](https://status.firebase.google.com)
+</Info>
+
+## Cache clearing instructions
+
+If you're experiencing persistent issues, clearing ChaosPrep's cache and data can help.
+
+**Chrome/Edge:**
+1. Open DevTools (F12 or Cmd+Option+I)
+2. Go to the "Application" tab
+3. Click "Clear storage" in the left sidebar
+4. Check "Unregister service workers", "Local storage", "IndexedDB"
+5. Click "Clear site data"
+6. Reload the page
+
+**Firefox:**
+1. Right-click the page → "Inspect"
+2. Go to the "Storage" tab
+3. Right-click each storage type (Cookies, Local Storage, IndexedDB) and select "Delete All"
+4. Reload the page
+
+**Safari:**
+1. Safari menu → Settings → Privacy → Manage Website Data
+2. Search for "chaosprep" or "sval.tech"
+3. Select and remove
+4. Reload the page
+
+<Warning>
+Clearing site data will log you out and delete all locally cached data. You'll need to sign in again and let Firestore re-sync your data.
+</Warning>
+
+## Still need help?
+
+If none of these solutions work:
+
+1. Check the [GitHub issues](https://github.com/sval-tech/chaosprep/issues) page to see if others have reported the same problem
+2. Open the browser console (F12) and look for error messages
+3. Take a screenshot of the error and create a new issue on GitHub
+4. Include details about your browser, operating system, and steps to reproduce the problem
+
+The ChaosPrep community is active and helpful - you'll usually get a response within 24 hours.

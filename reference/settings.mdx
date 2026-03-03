@@ -1,0 +1,164 @@
+---
+title: Settings
+description: Complete reference for all ChaosPrep settings
+---
+
+## Exam configuration
+
+<ParamField path="examType" type="string" default="'JEE Main'">
+  Your target exam type. Determines the default subjects and exam date.
+  
+  **Valid options:**
+  - `'JEE Main'`
+  - `'JEE Advanced'`
+  - `'NEET'`
+  - `'Custom'` (for other exams or study goals)
+</ParamField>
+
+<ParamField path="session" type="string" default="'Apr'">
+  JEE session (only applicable when `examType` is `'JEE Main'`).
+  
+  **Valid options:**
+  - `'Jan'` - January session (exam date: Jan 21)
+  - `'Apr'` - April session (exam date: Apr 1)
+</ParamField>
+
+<ParamField path="targetYear" type="number" default="2026">
+  The year of your target exam. Used to calculate countdown and target dates.
+</ParamField>
+
+<ParamField path="targetDate" type="string" default="'2026-04-01'">
+  The specific date of your exam in ISO format (`YYYY-MM-DD`). This is automatically calculated based on your exam type and session, but can be customized for `Custom` exam types.
+  
+  **Default dates by exam type:**
+  - JEE Main (Jan): January 21
+  - JEE Main (Apr): April 1
+  - NEET: May 5
+  - JEE Advanced: May 17
+  - Custom: Set manually
+</ParamField>
+
+## Subjects
+
+<ParamField path="customSubjects" type="array" default="[]">
+  Array of custom subject names to track alongside default subjects. Useful when studying additional subjects or when `examType` is set to `'Custom'`.
+  
+  **Example:**
+  ```javascript
+  customSubjects: ['Computer Science', 'English', 'Psychology']
+  ```
+  
+  **Default subjects by exam type:**
+  - JEE Main/Advanced: Physics, Chemistry, Maths
+  - NEET: Physics, Chemistry, Biology
+</ParamField>
+
+<ParamField path="subjectColors" type="object" default="{}">
+  Custom color assignments for each subject. Maps subject names to color keys from the color palette.
+  
+  **Available colors:**
+  `rose`, `amber`, `emerald`, `blue`, `violet`, `pink`, `teal`, `orange`, `cyan`
+  
+  **Example:**
+  ```javascript
+  subjectColors: {
+    'Physics': 'rose',
+    'Chemistry': 'amber',
+    'Maths': 'blue',
+    'Biology': 'emerald'
+  }
+  ```
+</ParamField>
+
+## Appearance
+
+<ParamField path="theme" type="string" default="'light'">
+  Visual theme for the application.
+  
+  **Valid options:**
+  - `'light'` - Light mode
+  - `'dark'` - Dark mode
+</ParamField>
+
+<ParamField path="accentTheme" type="string" default="'default'">
+  Accent color theme that changes the brand color throughout the app.
+  
+  **Valid options:**
+  - `'default'` - Purple accent
+  - `'matcha'` - Green accent
+  - `'cobalt'` - Blue accent
+  - `'crimson'` - Red accent
+  - `'monochrome'` - Grayscale
+</ParamField>
+
+<ParamField path="bgUrl" type="string" default="''">
+  Background image URL. When set, displays a custom background image behind the app interface. Leave empty for the default solid background.
+  
+  **Example:**
+  ```javascript
+  bgUrl: 'https://images.unsplash.com/photo-1234567890'
+  ```
+</ParamField>
+
+## Features
+
+<ParamField path="showCountdown" type="boolean" default="true">
+  Whether to display the exam countdown timer in the dashboard.
+</ParamField>
+
+<ParamField path="liteMode" type="boolean" default="true">
+  Enables lite mode for better performance. When enabled, reduces visual effects and animations for a faster, more focused experience.
+</ParamField>
+
+<ParamField path="showMusic" type="boolean" default="false">
+  Whether to show the music player widget in the interface.
+</ParamField>
+
+<ParamField path="shareTasks" type="boolean" default="true">
+  Allows your squad members to see your daily tasks when enabled. When disabled, only your study time and status are visible to squad members.
+</ParamField>
+
+## Study tracking
+
+<ParamField path="dailyQuestionTarget" type="number" default="50">
+  Your daily target for the number of questions to solve. This appears in the questions tracker and helps you maintain consistent practice.
+</ParamField>
+
+<ParamField path="dayRolloverHour" type="number" default="0">
+  The hour (0-23) when your "day" resets in ChaosPrep. This is part of the **logical day system**.
+  
+  **How it works:**
+  - Default: `0` (midnight)
+  - If set to `4`: Your study day runs from 4:00 AM to 3:59 AM the next day
+  - Any study sessions logged before the rollover hour count toward the previous day
+  
+  **Use cases:**
+  - Set to `4` or `5` if you study late at night and want those sessions to count toward the same day
+  - Set to `6` if you wake up early and want your morning sessions to start fresh
+  
+  <Info>
+  Changing this setting requires an app reload to update all calendars and date calculations.
+  </Info>
+</ParamField>
+
+## Understanding the logical day system
+
+ChaosPrep uses a "logical day" system that respects your actual study schedule instead of forcing midnight resets.
+
+**Example scenario:**
+If you set `dayRolloverHour` to `4`:
+- You study until 2:00 AM on Tuesday night
+- Those study sessions count toward **Monday** (since it's before 4 AM)
+- At 4:00 AM on Tuesday, a new study day begins
+- This prevents late-night study sessions from artificially breaking your streak
+
+**How it affects features:**
+- Daily task lists
+- Study streak calculations
+- Timer logs and statistics
+- Weekly target tracking
+- Calendar view
+
+<Warning>
+Changing your rollover hour will require the app to reload. Your existing logs will be reinterpreted based on the new rollover time.
+</Warning>

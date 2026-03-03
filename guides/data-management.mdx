@@ -1,0 +1,345 @@
+---
+title: Data management
+description: Understand how your data is stored, synced, and exported
+---
+
+ChaosPrep uses Firebase Firestore for real-time cloud sync with offline support. Your study data is always available, even without internet.
+
+## Cloud sync with Firebase
+
+All your data syncs automatically to Firebase Firestore:
+
+### What's synced
+
+- **Tasks**: Daily study items with completion status, subject, marks
+- **Weekly targets**: Goal tracking with completion percentage
+- **Study logs**: Timer sessions with duration, subject, timestamps
+- **Error logs**: Mistake tracking with chapter, type, and notes
+- **Question logs**: Daily practice counts
+- **Syllabus progress**: Chapter status (not started, in progress, completed, mastered)
+- **Settings**: Exam type, theme, custom subjects, rollover hour
+
+### How sync works
+
+<Steps>
+  <Step title="You make a change">
+    Add a task, complete a timer session, or update syllabus progress.
+  </Step>
+  
+  <Step title="Local database updates instantly">
+    ChaosPrep uses Firestore's persistent local cache. The change appears immediately in your UI.
+  </Step>
+  
+  <Step title="Background sync to cloud">
+    When online, the change uploads to Firebase. You'll never notice the sync happening.
+  </Step>
+  
+  <Step title="Other devices receive updates">
+    If you're logged in on multiple devices, they all update in real-time.
+  </Step>
+</Steps>
+
+<Info>
+  ChaosPrep uses Firestore's `persistentLocalCache` with `persistentMultipleTabManager()`. This enables offline support and prevents data conflicts when using multiple tabs.
+</Info>
+
+## Offline support
+
+ChaosPrep works fully offline thanks to Progressive Web App (PWA) architecture:
+
+### What works offline
+
+✅ **Complete functionality:**
+- View and edit calendar tasks
+- Start/stop timer and log study sessions
+- Update syllabus progress
+- Add weekly targets
+- Log errors and questions
+- Change settings (theme, subjects, etc.)
+
+### Offline data persistence
+
+All your data remains accessible offline through Firestore's persistent cache:
+
+```javascript
+const db = initializeFirestore(app, {
+    localCache: persistentLocalCache({ 
+        tabManager: persistentMultipleTabManager() 
+    })
+});
+```
+
+This means:
+- **No data loss**: Changes made offline are stored locally
+- **Automatic sync**: When you reconnect, everything uploads automatically
+- **Multi-tab support**: Use ChaosPrep in multiple tabs without conflicts
+
+<Info>
+  The persistent cache survives browser restarts. Even if you close all tabs and reopen later offline, your data is still there.
+</Info>
+
+### Offline indicators
+
+ChaosPrep doesn't show "offline" warnings because it works seamlessly either way. The only difference:
+
+- **Online**: Changes sync across devices in real-time
+- **Offline**: Changes sync when you reconnect
+
+You'll never lose work due to connectivity issues.
+
+<Tip>
+  Install ChaosPrep as a PWA ("Add to Home Screen" on mobile, install button in browser) for the best offline experience. PWAs have dedicated storage that persists longer than browser tabs.
+</Tip>
+
+## Data structure
+
+Firestore organizes your data hierarchically:
+
+```
+artifacts/
+  {appId}/
+    users/
+      {userId}/
+        settings/
+          config (document)
+        tasks/ (collection)
+          {taskId} (document)
+        weeklyTargets/ (collection)
+          {targetId} (document)
+        studyLogs/ (collection)
+          {logId} (document)
+        errorLogs/ (collection)
+          {errorId} (document)
+        questionLogs/ (collection)
+          {logId} (document)
+        syllabus/
+          progress (document)
+        socialProfile/ (if Squad enabled)
+          public (document)
+```
+
+### Settings document structure
+
+```json
+{
+  "examType": "JEE Main",
+  "session": "Apr",
+  "targetYear": 2026,
+  "targetDate": "2026-04-01",
+  "customSubjects": [],
+  "subjectColors": {
+    "Physics": "rose",
+    "Chemistry": "amber"
+  },
+  "theme": "dark",
+  "bgUrl": "",
+  "showCountdown": true,
+  "dailyQuestionTarget": 50,
+  "liteMode": false,
+  "dayRolloverHour": 0
+}
+```
+
+### Task document structure
+
+```json
+{
+  "text": "Electrostatics Revision",
+  "subject": "Physics",
+  "date": "2026-03-03",
+  "completed": false,
+  "marks": 85,
+  "maxMarks": 100,
+  "subjectMarks": {
+    "Physics": 85
+  },
+  "order": 0,
+  "createdAt": "2026-03-03T08:30:00.000Z"
+}
+```
+
+<Info>
+  The `order` field enables drag-and-drop reordering. Tasks sort by `order` (ascending), then by `createdAt` for new tasks without order values.
+</Info>
+
+### Study log document structure
+
+```json
+{
+  "subject": "Physics",
+  "durationMinutes": 45,
+  "date": "2026-03-03",
+  "timestamp": "2026-03-03T10:15:00.000Z",
+  "type": "timer",
+  "notes": "Gauss Law problems"
+}
+```
+
+### Syllabus progress document structure
+
+```json
+{
+  "status": {
+    "PHY_A_02": "completed",
+    "CHE_A_01": "mastered",
+    "MAT_B_03": "in-progress"
+  },
+  "meta": {
+    "PHY_A_02": {
+      "rev": 2,
+      "pyq": true
+    },
+    "CHE_A_01": {
+      "rev": 3,
+      "pyq": true
+    }
+  }
+}
+```
+
+<Info>
+  Chapter IDs follow the pattern `{SUBJECT}_{PRIORITY}_{NUMBER}`. For example, `PHY_A_02` is Physics, Priority A, Chapter 2.
+</Info>
+
+## Cross-device sync
+
+Sign in with the same Google account on multiple devices to keep everything in sync:
+
+### Real-time updates
+
+ChaosPrep uses Firestore snapshots for live updates:
+
+```javascript
+onSnapshot(collection(db, 'artifacts', appId, 'users', user.uid, 'tasks'), (snap) => {
+    state.tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (state.currentView === 'calendar') renderCalendar();
+});
+```
+
+This means:
+- Complete a task on your phone → Desktop updates instantly
+- Add a target on desktop → Phone reflects it immediately
+- Update syllabus on tablet → All devices show the same progress
+
+### Device-specific settings
+
+Some preferences are device-local, not synced:
+
+- **Theme preference**: Auto-detects system dark mode per device
+- **View state**: Calendar month, expanded syllabus sections
+- **Temporary UI state**: Open modals, selected filters
+
+Everything else syncs across devices.
+
+<Tip>
+  If you notice sync delays, check your internet connection. Firestore batches updates for efficiency, so minor delays (1-2 seconds) are normal on slower connections.
+</Tip>
+
+## Local storage vs cloud storage
+
+### What's stored locally
+
+**Firestore persistent cache:**
+- Complete copy of your synced data
+- Survives browser restarts
+- Automatic cleanup of old data
+
+**Browser localStorage:**
+- Temporary UI preferences
+- Authentication tokens (handled by Firebase)
+
+**IndexedDB (via Firestore):**
+- Primary offline storage mechanism
+- Stores documents and pending writes
+- Managed automatically by Firebase SDK
+
+### What's stored in the cloud
+
+Everything in the Firestore data structure syncs to Google Cloud Platform:
+
+- Hosted in Firebase's multi-region infrastructure
+- Automatic backups and redundancy
+- Encrypted in transit and at rest
+
+<Info>
+  Firestore uses IndexedDB for local persistence. You can view the raw data in Chrome DevTools → Application → IndexedDB → firestore/[project-id].
+</Info>
+
+## Data privacy and security
+
+### Authentication
+
+ChaosPrep uses Firebase Authentication with Google Sign-In:
+
+```javascript
+const provider = new GoogleAuthProvider();
+await signInWithPopup(auth, provider);
+```
+
+Benefits:
+- No password management required
+- OAuth 2.0 security standard
+- Automatic session management
+
+### Access control
+
+Firestore Security Rules ensure your data stays private:
+
+- **Read access**: Only you can read your own documents
+- **Write access**: Only you can modify your own data
+- **No cross-user access**: Other users cannot see your study logs or progress
+
+<Info>
+  If Squad features are enabled, only your public profile (display name, shared tasks) is visible to squad members. Your syllabus progress, error logs, and detailed study data remain completely private.
+</Info>
+
+### Data encryption
+
+- **In transit**: All data transfers use HTTPS/TLS encryption
+- **At rest**: Firebase encrypts all stored data automatically
+- **Authentication tokens**: Stored securely by Firebase Auth, never exposed to JavaScript
+
+## What happens when offline
+
+Here's exactly what happens during common offline scenarios:
+
+### Scenario 1: Add a task while offline
+
+1. Task appears in your calendar immediately (optimistic update)
+2. Firestore adds it to the local write queue
+3. When you reconnect, the write uploads automatically
+4. If the write fails, Firestore retries with exponential backoff
+
+### Scenario 2: Complete a task on phone (offline) and desktop (online)
+
+1. Phone marks task complete locally
+2. Desktop doesn't see the change yet (phone is offline)
+3. Phone reconnects and syncs
+4. Desktop receives the update via snapshot listener
+5. Both devices now show the task as complete
+
+**No conflicts**: Last write wins. Firestore uses timestamps to resolve conflicts automatically.
+
+### Scenario 3: Update settings offline
+
+1. Settings change applies locally (theme switches, rollover hour updates)
+2. Firestore queues the write
+3. On reconnection, settings sync to cloud
+4. Other devices receive the new settings
+
+<Info>
+  Firestore's offline persistence is designed for eventual consistency. In rare conflict cases (same field modified on two devices while offline), the last write timestamp wins.
+</Info>
+
+### Quota limits
+
+Firebase Free Tier (Spark Plan) limits:
+- **Reads**: 50k/day
+- **Writes**: 20k/day
+- **Storage**: 1GB
+
+For typical usage (one student, daily study tracking), you'll never hit these limits. ChaosPrep is well within free tier capacity.
+
+<Tip>
+  To minimize reads and writes, ChaosPrep uses Firestore's local cache aggressively. Switching between views doesn't trigger new database queries - it uses cached data.
+</Tip>

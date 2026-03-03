@@ -1,0 +1,434 @@
+---
+title: Customization
+description: Personalize ChaosPrep to match your exam and study style
+---
+
+ChaosPrep adapts to your specific exam and preferences. Configure everything from exam type to visual themes.
+
+## Exam type selection
+
+Choose your target exam to load the correct syllabus and subjects:
+
+<Steps>
+  <Step title="Open Settings">
+    Click the Settings icon in the sidebar (desktop) or bottom navigation (mobile).
+  </Step>
+  
+  <Step title="Select your exam type">
+    Choose from JEE Main, JEE Advanced, NEET, or Custom.
+  </Step>
+  
+  <Step title="Configure exam date">
+    The target date auto-fills based on your exam type and year. You can override this for Custom exams.
+  </Step>
+  
+  <Step title="Save settings">
+    Click "Save Changes" to apply. ChaosPrep will update the countdown and syllabus immediately.
+  </Step>
+</Steps>
+
+### JEE Main
+
+- **Subjects**: Physics, Chemistry, Maths
+- **Sessions**: Choose January or April session
+- **Default dates**: 
+  - January session: January 21
+  - April session: April 1
+- **Syllabus**: JEE Main pattern with priority mapping
+
+### JEE Advanced
+
+- **Subjects**: Physics, Chemistry, Maths
+- **Default date**: May 17
+- **Syllabus**: Advanced-level topics with higher difficulty
+- **Note**: Select this ONLY if you're appearing for JEE Advanced, not JEE Main
+
+### NEET
+
+- **Subjects**: Physics, Chemistry, Biology
+- **Default date**: May 5
+- **Syllabus**: NEET pattern covering NCERT + competitive topics
+- **Biology replaces Maths**: Automatically filters syllabus view
+
+### Custom exam
+
+- **Subjects**: Define your own (see Custom Subjects section)
+- **Date**: Set any target date
+- **Syllabus**: Uses default chapters or add your own tracking
+
+<Info>
+  When you change exam type, ChaosPrep automatically filters the syllabus view to show only relevant subjects. JEE shows Physics/Chemistry/Maths; NEET shows Physics/Chemistry/Biology.
+</Info>
+
+## Custom subjects
+
+If you're preparing for a custom exam or want to track additional subjects:
+
+<Steps>
+  <Step title="Enable Custom exam type">
+    Select "Custom" as your exam type in Settings.
+  </Step>
+  
+  <Step title="Click 'Manage Custom Subjects'">
+    A modal opens showing your current subjects.
+  </Step>
+  
+  <Step title="Add subjects">
+    Type subject names (e.g., "English", "General Knowledge", "Reasoning") and click Add.
+  </Step>
+  
+  <Step title="Assign colors">
+    Scroll to Subject Colors section and pick colors for your custom subjects.
+  </Step>
+</Steps>
+
+### Subject naming tips
+
+**Good subject names:**
+- ✅ Short and clear: "English", "GK", "Aptitude"
+- ✅ Consistent: Use "Maths" or "Mathematics", not both
+- ✅ Specific: "Organic Chemistry" instead of just "Chem"
+
+**Avoid:**
+- ❌ Very long names: "Foundation Physics Part 1 Module A" (truncates in UI)
+- ❌ Special characters: "Physics/Chemistry" (breaks filters)
+- ❌ Duplicate names: Can't distinguish between them
+
+<Tip>
+  Custom subjects appear in all subject selectors: task creation, timer, mock test breakdown, and study logs. If you add a custom subject, make sure you actually need to track it separately.
+</Tip>
+
+## Subject colors
+
+Visual color coding helps you identify subjects at a glance:
+
+### Default color mapping
+
+- **Physics**: Rose (pinkish-red)
+- **Chemistry**: Amber (orange-yellow)
+- **Maths**: Blue
+- **Biology**: Emerald (green)
+
+### Available color palette
+
+| Color | Hex Code | Best For |
+|-------|----------|----------|
+| Rose | #f43f5e | Physics, high-energy subjects |
+| Amber | #f59e0b | Chemistry, analytical subjects |
+| Blue | #3b82f6 | Maths, logical subjects |
+| Emerald | #10b981 | Biology, life sciences |
+| Violet | #8b5cf6 | Custom subjects |
+| Pink | #ec4899 | Language, creative subjects |
+| Teal | #14b8a6 | General studies |
+| Orange | #f97316 | Aptitude, reasoning |
+| Cyan | #06b6d4 | Computer science, technical |
+
+### Changing subject colors
+
+1. Go to Settings → Subject Colors
+2. Each subject shows a row of color swatches
+3. Click any color to apply
+4. Changes preview immediately (no save needed)
+5. Click "Save Changes" to persist
+
+<Info>
+  Subject colors apply to task cards, timer pills, syllabus badges, and study log breakdowns. Choose colors that feel intuitive to you - there's no wrong choice.
+</Info>
+
+## Day rollover hour
+
+ChaosPrep uses a **logical day system** instead of strict midnight cutoffs:
+
+### How it works
+
+The day rollover hour defines when your study day starts:
+
+- **Rollover at 0 (midnight)**: Standard 12am-11:59pm day
+- **Rollover at 4**: Day runs from 4am to 3:59am next day
+- **Rollover at 6**: Day runs from 6am to 5:59am next day
+
+This ensures late-night study sessions count for the correct day.
+
+### Example scenario
+
+**Problem**: You study until 2am, but want it to count for yesterday's date.
+
+**Solution**: Set rollover hour to 4.
+
+Now:
+- March 3, 1:30am counts as March 2 (yesterday)
+- March 3, 5:00am counts as March 3 (today)
+
+### Setting rollover hour
+
+```javascript
+// In Settings
+dayRolloverHour: 4  // Day starts at 4am
+```
+
+<Steps>
+  <Step title="Go to Settings → Day Rollover Hour">
+    Find the dropdown with hours 0-23.
+  </Step>
+  
+  <Step title="Select your preferred hour">
+    Choose when your study day should start. Most students use 0, 4, or 6.
+  </Step>
+  
+  <Step title="Save and reload">
+    ChaosPrep will reload to recalculate all dates with the new rollover time.
+  </Step>
+</Steps>
+
+<Info>
+  Changing rollover hour recalculates streaks, weekly targets, and calendar dates. This is why ChaosPrep reloads after saving. Your data isn't modified - just the date interpretation.
+</Info>
+
+<Tip>
+  If you regularly study past midnight, set rollover to 4am or 6am. This keeps your study sessions grouped with the day you started them.
+</Tip>
+
+## Daily question targets
+
+Set a question-solving goal to maintain consistency:
+
+### Recommended targets by exam
+
+- **JEE Main**: 40-50 questions/day
+- **JEE Advanced**: 30-40 questions/day (harder problems take longer)
+- **NEET**: 100-150 questions/day (more MCQs, faster solving)
+- **Board + Competitive**: 60-80 questions/day
+
+### How to set
+
+1. Settings → Daily Question Target
+2. Enter your target number (default: 50)
+3. Save changes
+
+The Questions view shows a progress bar comparing your daily count to the target.
+
+<Tip>
+  Start conservative (30-40 questions) and increase gradually. Consistency matters more than hitting a high target once per week.
+</Tip>
+
+## Theme preferences
+
+ChaosPrep supports light and dark modes:
+
+### Light mode
+
+- Clean white backgrounds
+- High contrast for daytime reading
+- Softer shadows and borders
+
+### Dark mode
+
+- True black backgrounds (#09090b)
+- Reduced eye strain for night studying
+- Vibrant accent colors pop more
+
+### How to toggle
+
+Click the theme toggle in the sidebar (desktop) or Settings (mobile). The sun/moon icon switches instantly.
+
+```javascript
+// Theme is stored in settings
+theme: 'dark'  // or 'light'
+```
+
+<Info>
+  Theme preference syncs across devices. If you enable dark mode on desktop, your mobile app switches to dark mode automatically.
+</Info>
+
+### Accent themes (experimental)
+
+ChaosPrep also supports accent theme variations:
+
+- **Default**: Purple brand color (#7c3aed)
+- **Matcha**: Green-focused palette
+- **Cobalt**: Deep blue theme
+- **Crimson**: Red accent theme
+- **Monochrome**: Grayscale minimalist
+
+These are set via `accentTheme` in settings and apply CSS variables globally.
+
+## Background customization
+
+Add a custom background image for visual personalization:
+
+### Using preset backgrounds
+
+ChaosPrep offers curated presets:
+
+1. Settings → Background
+2. Click any preset thumbnail
+3. The background applies immediately
+4. Save to persist
+
+### Using custom image URL
+
+<Steps>
+  <Step title="Find your image URL">
+    Upload to Imgur, Google Drive, or any image host. Copy the direct image URL (ends in .jpg, .png, .webp).
+  </Step>
+  
+  <Step title="Paste in Settings">
+    Settings → Background → Custom URL field.
+  </Step>
+  
+  <Step title="Preview and save">
+    The background updates live. If it looks good, click Save Changes.
+  </Step>
+</Steps>
+
+### Removing background
+
+Clear the URL field and save. The background fades out.
+
+<Info>
+  Backgrounds are stored in the `bgUrl` setting. They use CSS `background-image` with fixed positioning and blur effect for readability.
+</Info>
+
+<Tip>
+  Choose subtle, low-contrast backgrounds. Busy images make text harder to read. Landscapes, gradients, and abstract patterns work best.
+</Tip>
+
+## Lite mode
+
+Lite mode minimizes distractions for focused study:
+
+### What Lite Mode disables
+
+- ❌ Countdown timer (reduces exam anxiety)
+- ❌ Floating emoji animations
+- ❌ Background images (forced clean background)
+- ❌ Non-essential UI flourishes
+
+### What remains enabled
+
+- ✅ All core features (tasks, timer, syllabus)
+- ✅ Study logs and analytics
+- ✅ Weekly targets and progress tracking
+- ✅ Dark/light theme switching
+
+### When to use Lite Mode
+
+**Enable for:**
+- Full-length mock tests (simulates exam conditions)
+- Deep focus study sessions (2+ hours)
+- Late-night studying (reduces visual stimulation)
+- Low-end devices (improves performance)
+
+**Disable for:**
+- Regular daily planning (countdown is motivating)
+- Quick task reviews (animations provide feedback)
+- When you need accountability cues
+
+<Steps>
+  <Step title="Open Settings">
+    Navigate to the Preferences section.
+  </Step>
+  
+  <Step title="Toggle Lite Mode">
+    Click the switch next to "Lite Mode".
+  </Step>
+  
+  <Step title="Save changes">
+    The UI refreshes with minimal styling.
+  </Step>
+</Steps>
+
+<Tip>
+  Combine Lite Mode with dark theme and no background for the ultimate distraction-free environment. Perfect for exam day simulation.
+</Tip>
+
+## Countdown display settings
+
+The countdown timer shows days remaining until your target exam date:
+
+### Countdown features
+
+- Large display in sidebar (desktop) or dashboard (mobile)
+- Auto-calculates from current date to target date
+- Updates daily at rollover hour
+- Color shifts as exam approaches:
+  - **Green**: 100+ days remaining
+  - **Amber**: 30-100 days
+  - **Red**: Under 30 days
+
+### Hiding the countdown
+
+If the countdown increases anxiety:
+
+1. Settings → Show Countdown
+2. Toggle off
+3. Save changes
+
+The countdown hides completely, including from the dashboard.
+
+<Info>
+  Some students find countdowns motivating, others find them stressful. ChaosPrep doesn't judge - hide it if it helps you focus.
+</Info>
+
+### Custom exam dates
+
+For Custom exam type:
+
+1. Settings → Exam Type → Custom
+2. Settings → Custom Exam Date
+3. Pick any date
+4. Countdown calculates automatically
+
+This works for competitive exams, board exams, or personal deadlines.
+
+<Tip>
+  Set multiple accounts for multiple exams. Use one ChaosPrep account per target exam if you're preparing for JEE and NEET simultaneously. This keeps syllabi and countdowns separate.
+</Tip>
+
+## Saving and syncing settings
+
+All settings sync to Firebase in real-time:
+
+### Save workflow
+
+1. Make changes in Settings panel
+2. "Save Changes" button highlights (brand color)
+3. Click to save
+4. Settings write to Firestore
+5. All devices receive the update within seconds
+
+### Unsaved changes indicator
+
+If you modify settings without saving:
+- Orange dot appears near Save button
+- Button text changes to "Save Changes" (from "Done")
+- Closing settings without saving discards changes
+
+<Info>
+  Some settings require a reload (rollover hour). ChaosPrep will reload automatically after saving these specific settings.
+</Info>
+
+### Settings that apply immediately (no save)
+
+- Theme toggle (sun/moon button)
+- View switching (Calendar, Weekly, Timer, etc.)
+- Modal opens/closes
+
+These are UI state, not persisted settings.
+
+### Settings that require save
+
+- Exam type and date
+- Custom subjects
+- Subject colors
+- Background URL
+- Daily question target
+- Lite mode
+- Day rollover hour
+- Countdown visibility
+
+Always click "Save Changes" after modifying these.
+
+<Tip>
+  If settings don't seem to apply, check for the orange unsaved changes indicator. You may have modified something without clicking Save.
+</Tip>

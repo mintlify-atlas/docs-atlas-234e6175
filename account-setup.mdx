@@ -1,0 +1,283 @@
+---
+title: "Account setup"
+description: "Configure your ChaosPrep account and set your exam goals"
+---
+
+## Account configuration
+
+After signing in for the first time, configure your account to match your exam preparation needs. All settings are synced to Firebase and persist across devices.
+
+## Sign in with Google
+
+ChaosPrep uses Google Authentication for secure, hassle-free sign-in.
+
+**How it works:**
+1. Click **Sign In with Google** on the landing page
+2. Select your Google account from the popup
+3. Grant ChaosPrep permission to access your basic profile (name, email, profile photo)
+4. You're signed in and your data syncs automatically
+
+<Info>
+  ChaosPrep only stores your user ID, display name, and email. Your Google credentials are never stored. Authentication is handled entirely by Firebase.
+</Info>
+
+**Account security:**
+- All data is stored in Firebase Firestore with strict security rules
+- Only you can access your tasks, logs, and settings
+- Sign out from any device by clicking the **Log Out** icon in the sidebar
+
+## Exam setup
+
+Set your target exam and date to enable countdown tracking and syllabus filtering.
+
+### Configure exam type
+
+1. Click the **Settings** icon (gear) in the sidebar or mobile header
+2. In the **Exam Setup** section, select your exam type:
+
+<Tabs>
+  <Tab title="JEE Main">
+    - Subjects: Physics, Chemistry, Mathematics
+    - Sessions: Jan or Apr
+    - Target date auto-calculates based on session
+    - Syllabus includes 30 chapters per subject
+  </Tab>
+  <Tab title="JEE Advanced">
+    - Subjects: Physics, Chemistry, Mathematics
+    - Sessions: Jan or Apr (same as JEE Main)
+    - Target date typically follows JEE Main by 6-8 weeks
+    - Advanced-specific syllabus tracking
+  </Tab>
+  <Tab title="NEET">
+    - Subjects: Physics, Chemistry, Biology
+    - Single session per year (typically May)
+    - Target date set to NEET exam date
+    - Biology-specific chapters included
+  </Tab>
+  <Tab title="Custom">
+    - Define your own subjects (see [Customize subjects](#customize-subjects))
+    - Manually set target date
+    - Flexible syllabus tracking
+  </Tab>
+</Tabs>
+
+### Set target exam date
+
+The target date determines:
+- **Countdown timer** in the sidebar ("X Days" remaining)
+- **Reality Check modal** with motivational countdown
+- **Weekly planning** context (how many weeks until exam)
+
+**To set target date:**
+1. Select **Exam Type** and **Session** in Settings
+2. The target date is auto-calculated (e.g., JEE Main Apr → April 1st)
+3. Override with a custom date if needed
+4. Click **Save Settings**
+
+<Tip>
+  The countdown card in the sidebar shows days remaining. Click it to open the **Reality Check** modal with a full-screen countdown and motivational context.
+</Tip>
+
+## Customize subjects
+
+If you're preparing for a custom exam or want to track additional subjects, add them in the **Custom Subjects** section.
+
+<Steps>
+  <Step title="Open subject manager">
+    1. Go to **Settings**
+    2. Scroll to **Custom Subjects**
+    3. Click **+ Manage** next to the subject selector
+  </Step>
+
+  <Step title="Add custom subjects">
+    1. Enter a subject name (e.g., "English", "GK", "Aptitude")
+    2. Select a color from the palette:
+       - Rose, Amber, Emerald, Blue, Violet, Pink, Teal, Orange, Cyan
+    3. Click **Add Subject**
+
+    Your custom subject now appears in:
+    - Task creation dropdowns
+    - Timer subject selector
+    - Mock test filters
+    - Error log categories
+  </Step>
+
+  <Step title="Assign subject colors">
+    Each subject has a color theme used across the app for visual consistency.
+
+    **Default colors:**
+    - Physics: Rose
+    - Chemistry: Amber
+    - Maths: Blue
+    - Biology: Emerald
+
+    Change subject colors in **Settings > Custom Subjects > Subject Colors**.
+  </Step>
+</Steps>
+
+<Note>
+  Custom subjects are saved to your Firebase settings and sync across all devices.
+</Note>
+
+## Set daily rollover hour
+
+ChaosPrep uses a "logical day" system to handle late-night study sessions.
+
+**How it works:**
+- If you study past midnight, sessions can count toward the previous day
+- Configurable rollover hour (default: 12 AM)
+- Affects streak calculations, daily logs, and "Today" stats
+
+**Example:**
+- Rollover set to 4 AM
+- You log a session at 2 AM on March 4th
+- The session is recorded as March 3rd (previous logical day)
+- At 4:01 AM, the new logical day (March 4th) begins
+
+**To configure:**
+1. Go to **Settings > Preferences**
+2. Set **Day Rollover Hour** (0-23, where 0 = 12 AM)
+3. Click **Save Settings**
+
+<Warning>
+  Changing the rollover hour affects how existing logs are grouped. Be consistent to avoid confusion in your study stats.
+</Warning>
+
+## Appearance settings
+
+Customize the look and feel of ChaosPrep to match your preferences.
+
+### Theme
+
+Switch between **Light** and **Dark** mode:
+1. Go to **Settings > Appearance**
+2. Select **Light** or **Dark**
+3. The theme applies immediately (no need to save)
+
+<Tabs>
+  <Tab title="Light theme">
+    - White backgrounds with zinc-50 accents
+    - High contrast for outdoor use
+    - Default theme
+  </Tab>
+  <Tab title="Dark theme">
+    - Dark zinc-900 backgrounds
+    - Reduced eye strain for night sessions
+    - OLED-friendly
+  </Tab>
+</Tabs>
+
+### Accent color
+
+ChaosPrep uses a brand color (purple/violet) for primary actions, buttons, and highlights. Future updates may allow accent customization.
+
+### Countdown visibility
+
+Toggle the countdown timer in the sidebar:
+1. Go to **Settings > Preferences**
+2. Enable/disable **Show Countdown**
+3. When disabled, the countdown card is hidden
+
+<Tip>
+  If the countdown causes anxiety, hide it and focus on daily execution instead. You can still access the target date in Settings.
+</Tip>
+
+## Data sync and offline mode
+
+ChaosPrep is a Progressive Web App with offline-first architecture.
+
+### How sync works
+
+**Online:**
+- All changes (tasks, logs, settings) sync instantly to Firebase
+- Real-time listeners update the UI when data changes
+- Changes appear on all logged-in devices within seconds
+
+**Offline:**
+- Firebase's persistent cache stores your data locally
+- You can create tasks, log sessions, and update settings
+- Changes queue and sync when you reconnect
+
+**Conflict resolution:**
+- Last write wins (most recent change takes precedence)
+- Firestore handles merging automatically
+
+<Note>
+  The app shows "Syncing..." in the sidebar when offline. Once reconnected, it updates to show your email.
+</Note>
+
+### Install as PWA
+
+Install ChaosPrep for a native app experience:
+
+**Benefits:**
+- Launches from home screen/app drawer
+- Fullscreen mode (no browser UI)
+- Faster load times with cached assets
+- Offline access to all features
+
+**Installation:**
+- **Mobile**: Tap Share > Add to Home Screen
+- **Desktop**: Click the install icon in the address bar
+
+<Info>
+  PWA installation is optional. ChaosPrep works perfectly in a browser tab, but the installed version feels more native and loads faster.
+</Info>
+
+## Privacy and data
+
+Your data is private and secure.
+
+**What we store:**
+- User ID, display name, email (from Google Auth)
+- Tasks, study logs, mock scores, error logs, syllabus progress
+- Settings and preferences
+
+**What we don't store:**
+- Google passwords or credentials
+- Personal information beyond basic profile
+- Usage analytics (optional, anonymized)
+
+**Data access:**
+- Only you can access your data (enforced by Firestore security rules)
+- SVAL.TECH cannot read your private tasks or logs
+- No third-party data sharing
+
+<Warning>
+  If you delete your account, all data is permanently removed from Firebase. This action cannot be undone.
+</Warning>
+
+## Next steps
+
+Now that your account is configured, start using ChaosPrep's core features:
+
+<CardGroup cols={2}>
+  <Card
+    title="Daily planner"
+    icon="calendar"
+    href="/features/daily-planner"
+  >
+    Add tasks to your calendar and track daily completion.
+  </Card>
+  <Card
+    title="Focus timer"
+    icon="clock"
+    href="/features/focus-timer"
+  >
+    Log deep work sessions and build study streaks.
+  </Card>
+  <Card
+    title="Weekly targets"
+    icon="target"
+    href="/features/weekly-targets"
+  >
+    Set weekly goals and monitor progress.
+  </Card>
+  <Card
+    title="Settings reference"
+    icon="gear"
+    href="/reference/settings"
+  >
+    Full list of all available settings and options.
+  </Card>
+</CardGroup>

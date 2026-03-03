@@ -1,0 +1,174 @@
+---
+title: FAQ
+description: Frequently asked questions about ChaosPrep
+---
+
+<AccordionGroup>
+  <Accordion title="How does data sync work?">
+    ChaosPrep uses Firebase Firestore with persistent local cache to sync your data across devices. All your tasks, study logs, syllabus progress, and settings are stored in the cloud and automatically sync when you're online.
+
+    **Offline changes:** When you make changes offline, they're stored locally and automatically sync to the cloud when your connection is restored.
+
+    **Multi-tab support:** ChaosPrep supports multiple tabs open simultaneously. Changes in one tab instantly appear in others.
+
+    Learn more about [data management](/guides/data-management).
+  </Accordion>
+
+  <Accordion title="Can I use ChaosPrep offline?">
+    Yes! ChaosPrep is a Progressive Web App (PWA) with full offline support.
+
+    **What works offline:**
+    - Viewing your tasks and calendar
+    - Adding and editing tasks
+    - Tracking study time with the timer
+    - Logging questions and errors
+    - Updating syllabus progress
+
+    **What requires internet:**
+    - Initial sign-in
+    - Syncing changes to the cloud
+    - Squad features (viewing squad members' activity)
+    - Receiving updates from other devices
+
+    All offline changes automatically sync when you reconnect to the internet.
+  </Accordion>
+
+  <Accordion title="What's the difference between daily tasks and weekly targets?">
+    **Daily tasks** are specific, actionable items you plan to complete on a particular day. They appear in your calendar and can be checked off, deleted, or rescheduled by dragging and dropping.
+
+    **Weekly targets** are broader study goals for the entire week, usually measured in hours per subject. They help you plan your weekly workload and ensure balanced preparation across all subjects.
+
+    **Example:**
+    - Daily task: "Complete 50 physics questions from rotational motion"
+    - Weekly target: "8 hours of physics this week"
+
+    Learn more about [daily planner](/features/daily-planner) and [weekly targets](/features/weekly-targets).
+  </Accordion>
+
+  <Accordion title="How are study streaks calculated?">
+    Your study streak counts consecutive days where you logged at least one study session using the timer or manual log.
+
+    **How it works:**
+    - The streak checks if you studied "today" or "yesterday" (based on your logical day)
+    - If you have a session logged for today, the streak continues
+    - If you last studied yesterday, the streak is still active
+    - If your last session was 2+ days ago, the streak resets to 0
+
+    **Important:** The streak uses your [logical day](/reference/settings#understanding-the-logical-day-system) based on your `dayRolloverHour` setting. If you study at 2 AM and your rollover is set to 4 AM, that session counts toward the previous day, protecting your streak.
+
+    See [Focus timer](/features/focus-timer) for more about tracking study time.
+  </Accordion>
+
+  <Accordion title="What do the syllabus priority levels mean?">
+    Each chapter in the JEE and NEET syllabus has a priority level (A, B, C, or D) that indicates its importance for the exam.
+
+    - **Priority A:** Highest weightage, appears frequently in exams. Focus on these first.
+    - **Priority B:** Important chapters with moderate weightage.
+    - **Priority C:** Less frequently tested but still part of the syllabus.
+    - **Priority D:** Lower priority or rare topics.
+
+    These priorities are built into ChaosPrep's syllabus database and help you plan your preparation strategy.
+
+    Learn more about [Syllabus Tracker](/features/syllabus-tracker).
+  </Accordion>
+
+  <Accordion title="Can my squad members see all my data?">
+    No. Squad members can only see what you choose to share.
+
+    **What squad members can see:**
+    - Your profile name and avatar
+    - Your live study status (when you're actively using the timer, and which subject)
+    - Your daily tasks (if `shareTasks` is enabled in settings)
+    - General study activity (when you were last online)
+
+    **What squad members cannot see:**
+    - Your syllabus progress
+    - Your mock test scores
+    - Your question logs or error logs
+    - Your weekly targets
+    - Any detailed notes or task descriptions
+
+    You can disable task sharing anytime in [Settings](/reference/settings) by toggling `shareTasks` to `false`.
+
+    Learn more about [Accountability squad](/features/accountability-squad).
+  </Accordion>
+
+  <Accordion title="How do I export my data?">
+    Currently, ChaosPrep does not have a built-in export feature. Your data is stored securely in Firebase Firestore and is accessible through your account.
+
+    **Data access:**
+    - All data is tied to your Google account
+    - You can access your data from any device by signing in
+    - Your data persists indefinitely as long as you have an account
+
+    <Info>
+    A data export feature is planned for a future update, allowing you to download your study logs, tasks, and syllabus progress as JSON or CSV files.
+    </Info>
+  </Accordion>
+
+  <Accordion title="What exam types are supported?">
+    ChaosPrep officially supports:
+    - **JEE Main** (January and April sessions)
+    - **JEE Advanced**
+    - **NEET**
+    - **Custom** (for any other exam or study goal)
+
+    Each exam type comes with:
+    - Curated syllabus with priority levels (JEE/NEET only)
+    - Default subjects (Physics, Chemistry, Maths/Biology)
+    - Preset exam dates
+
+    **Using Custom mode:**
+    If you're preparing for CUET, BITSAT, state boards, or any other exam, select "Custom" in settings and add your own subjects. You won't get the pre-populated syllabus, but all other features (tasks, timer, weekly targets, etc.) work normally.
+
+    Configure your exam type in [Settings](/reference/settings).
+  </Accordion>
+
+  <Accordion title="How does the day rollover work?">
+    The **day rollover** is the hour when your "study day" resets in ChaosPrep. Instead of forcing a midnight reset, you can customize when your day begins.
+
+    **Default:** 0 (midnight)
+
+    **How to use it:**
+    1. Go to Settings
+    2. Find "Day Rollover Hour"
+    3. Set it to any hour from 0-23
+
+    **Example:**
+    If you set it to `4` (4 AM):
+    - Your study day runs from 4:00 AM to 3:59 AM the next day
+    - If you study until 2 AM, that session counts toward the previous day
+    - At 4 AM, a fresh day begins
+
+    **Why this matters:**
+    - Protects your study streak when you work late
+    - Makes daily task lists more intuitive
+    - Aligns your "day" with your actual study schedule
+
+    Learn more about the [logical day system](/reference/settings#understanding-the-logical-day-system).
+  </Accordion>
+
+  <Accordion title="Is my data private and secure?">
+    Yes. ChaosPrep takes your privacy seriously.
+
+    **Security measures:**
+    - All data is stored in Firebase Firestore with security rules
+    - Only you can access your personal data (tasks, logs, syllabus progress)
+    - Authentication is handled by Firebase Auth using your Google account
+    - Firestore security rules prevent unauthorized access
+
+    **What data is stored:**
+    - Your Google account email, name, and profile photo (from Google Sign-In)
+    - Tasks, study logs, question logs, error logs
+    - Syllabus progress and weekly targets
+    - Settings and preferences
+    - Squad connections (friend codes only, no personal data shared)
+
+    **Data sharing:**
+    - Your data is never sold to third parties
+    - Squad members only see limited data (based on your sharing settings)
+    - You can delete your account and all associated data by signing out and clearing your browser data
+
+    ChaosPrep is an open-source project. You can review the [source code](https://github.com/sval-tech/chaosprep) to see exactly how your data is handled.
+  </Accordion>
+</AccordionGroup>

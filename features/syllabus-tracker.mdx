@@ -1,0 +1,161 @@
+---
+title: Syllabus tracker
+description: Monitor your JEE/NEET syllabus completion progress
+---
+
+The syllabus tracker provides a structured view of the complete JEE or NEET syllabus organized by subjects, units, and chapters. Track your progress through each chapter with status updates, revision counts, and PYQ completion.
+
+## JEE/NEET syllabus structure
+
+ChaosPrep includes the official syllabus for both exams:
+
+### JEE (Main/Advanced)
+- **Physics**: 28 chapters across 6 units (Mechanics, Thermodynamics, Electromagnetism, Optics & Modern, Experimental)
+- **Chemistry**: 23 chapters across 3 units (Physical, Inorganic, Organic)
+- **Mathematics**: 27 chapters across 4 units (Algebra, Calculus, Coordinate & Vectors, Trigonometry & Stats)
+
+### NEET
+- **Physics**: 28 chapters across 6 units (same as JEE)
+- **Chemistry**: 23 chapters across 3 units (same as JEE)
+- **Biology**: 32 chapters across 7 units (Diversity, Cell Structure, Plant Physiology, Human Physiology, Reproduction & Genetics, Human Welfare, Biotech & Ecology)
+
+The tracker automatically shows only the relevant subjects based on your exam type (set in Settings).
+
+## Chapter priority system
+
+Each chapter has a priority level based on historical exam weightage:
+
+- **A Priority**: Highest weightage topics (e.g., Current Electricity, GOC, 3D Geometry)
+- **B Priority**: Important topics with moderate weightage
+- **C Priority**: Lower weightage but still appear regularly
+- **D Priority**: Least frequent topics in exams
+
+<Tip>
+**Priority-based study strategy**: If you're short on time, focus on completing all A and B priority chapters first. This covers 70-80% of typical exam questions. Use C and D priority chapters to maximize your score after mastering the high-priority topics.
+</Tip>
+
+## Chapter status tracking
+
+Every chapter can be assigned one of four status states:
+
+### Not Started (gray dot)
+Default state for new chapters. The chapter hasn't been touched yet.
+
+### In Progress (yellow dot)
+You've started studying this chapter but haven't completed it. Use this for chapters you're currently working through.
+
+### Completed (green dot)
+You've finished studying all concepts and solved basic problems from this chapter. First-time completion.
+
+### Revised (purple dot)
+You've completed the chapter AND revised it at least once. This is your target state for exam readiness.
+
+## Updating chapter status
+
+<Steps>
+  <Step title="Navigate to Syllabus">
+    Click **Syllabus** in the navigation bar to open the tracker.
+  </Step>
+  
+  <Step title="Find your chapter">
+    Browse by subject and unit, or use the search bar to find a specific chapter by name.
+  </Step>
+  
+  <Step title="Open the chapter panel">
+    Click on any chapter row to expand the action panel below it. An animated dropdown appears.
+  </Step>
+  
+  <Step title="Select status">
+    Click one of the four status buttons: To Do, Doing, Done, or Mastered. The status updates instantly.
+  </Step>
+  
+  <Step title="Track revisions and PYQs">
+    - Use the **+/-** buttons to increment revision count
+    - Toggle **PYQs** button to mark when you've solved previous year questions
+  </Step>
+</Steps>
+
+## Progress tracking
+
+At the top of the syllabus view, you'll see overall progress statistics:
+
+- **Completion percentage**: Large number showing overall syllabus coverage
+- **Progress bar**: Color-coded bar showing proportion of chapters in each status
+  - Purple segment: Mastered chapters
+  - Green segment: Completed chapters
+  - Yellow segment: In Progress chapters
+  - Gray segment: Not Started chapters
+
+### Subject-wise progress
+
+Below the overall progress, individual subject cards display:
+
+- Subject name and total chapters
+- Completion percentage for that subject
+- Progress bar (same color-coding as overall)
+
+This helps you identify which subjects need more attention.
+
+## Revision counter
+
+Each chapter has a revision counter that tracks how many times you've revised it.
+
+- Click **+** to increment after each revision
+- Click **-** to decrement if logged by mistake
+- The count displays in the chapter badges
+
+**Example badge**: `R2` means revised 2 times.
+
+## PYQ completion tracking
+
+The **PYQs** toggle marks whether you've solved previous year questions for this chapter.
+
+- Click to toggle ON (green with checkmark)
+- Click again to toggle OFF
+
+PYQ completion is displayed as a badge on the chapter card.
+
+## Custom chapters
+
+If you're studying topics outside the standard syllabus, you can add custom chapters:
+
+1. Click **+ Add Custom Chapter** at the bottom of any unit
+2. Enter the chapter name
+3. Track it with the same status, revision, and PYQ system
+
+Custom chapters appear alongside standard syllabus chapters and contribute to progress calculations.
+
+## Syllabus search
+
+Use the search bar at the top of the tracker to filter chapters by name. The search is instant and case-insensitive.
+
+Example searches:
+- "electro" → shows Electrostatics, Electrochemistry, EM Waves
+- "motion" → shows Motion In One Dimension, Motion In Two Dimensions, Rotational Motion
+
+## Progress calculation logic
+
+The completion percentage uses weighted scoring:
+
+- **Not Started**: 0% contribution
+- **In Progress**: 50% contribution
+- **Completed**: 100% contribution
+- **Revised**: 100% contribution
+
+Example: If you have 10 chapters with 5 Completed, 3 In Progress, and 2 Not Started:
+
+```
+(5 × 1.0 + 3 × 0.5 + 2 × 0) / 10 = 65% completion
+```
+
+<Note>
+**Data privacy**: Your syllabus progress is private and not shared with your [Accountability Squad](/features/accountability-squad). Only your daily tasks and streaks are visible to friends.
+</Note>
+
+## Collapsible units
+
+Each unit (e.g., "Mechanics I", "Physical Chem") can be collapsed or expanded:
+
+- Click the unit header to toggle collapse/expand
+- This keeps the interface clean when reviewing specific sections
+- Your collapse states are saved per session
